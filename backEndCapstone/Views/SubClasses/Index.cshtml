@@ -1,0 +1,53 @@
+﻿@model IEnumerable<backEndCapstone.Models.SubClass>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SubClassClassId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SubClassName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SubClassDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SubClassFeatures)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubClassClassId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubClassName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubClassDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubClassFeatures)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.SubClassId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.SubClassId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.SubClassId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

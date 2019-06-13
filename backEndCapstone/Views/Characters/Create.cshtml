@@ -1,0 +1,96 @@
+﻿@model backEndCapstone.Models.ViewModels.CreateCharacterViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+<head>
+    <link rel="stylesheet" href="~/css/site.css" type="text/css" />
+</head>
+<body>
+    <h1>Create</h1>
+
+    <h4>Character</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Character.Name" class="control-label"></label>
+                    <input asp-for="Character.Name" class="form-control" />
+                    <span asp-validation-for="Character.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Character.Alignment" class="control-label"></label>
+                    <input asp-for="Character.Alignment" class="form-control" />
+                    <span asp-validation-for="Character.Alignment" class="text-danger"></span>
+                </div>
+                <div id="AbilityScores">
+                    <div class="form-group">
+                        <label asp-for="Character.Strength" class="control-label"></label>
+                        <input asp-for="Character.Strength" class="form-control" />
+                        <span asp-validation-for="Character.Strength" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Character.Dexterity" class="control-label"></label>   
+                        <input asp-for="Character.Dexterity" class="form-control" />
+                        <span asp-validation-for="Character.Dexterity" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Character.Constitution" class="control-label"></label>
+                        <input asp-for="Character.Constitution" class="form-control" />
+                        <span asp-validation-for="Character.Constitution" class="text-danger"></span>
+                    </div>
+                </div>
+                <div id="AbilityScores">
+                    <div class="form-group">
+                        <label asp-for="Character.Intelligence" class="control-label"></label>
+                        <input asp-for="Character.Intelligence" class="form-control" />
+                        <span asp-validation-for="Character.Intelligence" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Character.Wisdom" class="control-label"></label>
+                        <input asp-for="Character.Wisdom" class="form-control" />
+                        <span asp-validation-for="Character.Wisdom" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Character.Charisma" class="control-label"></label>
+                        <input asp-for="Character.Charisma" class="form-control" />
+                        <span asp-validation-for="Character.Charisma" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Character.CharacterClassId" class="control-label"></label>
+                    <select asp-for="Character.CharacterClassId" class="form-control" asp-items="ViewBag.CharacterClassId"><option value="">Choose a Class</option></select>
+                    <span asp-validation-for="Character.CharacterClassId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Character.BackgroundId" class="control-label"></label>
+                    <select asp-for="Character.BackgroundId" class="form-control" asp-items="ViewBag.BackgroundId"><option value="">Choose a Background</option></select>
+                    <span asp-validation-for="Character.BackgroundId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Character.FeatId" class="control-label"></label>
+                    <select asp-for="Character.FeatId" class="form-control" asp-items="ViewBag.FeatId"><option value="">Choose Feats</option></select>
+                    <span asp-validation-for="Character.FeatId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Races" class="control-label"></label>
+                    <select asp-for="@Model.Character.RaceId" class="form-control" asp-items="@Model.Races"><option value="">Choose a Race</option> </select>
+                    <span asp-validation-for="Character.RaceId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</body>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
