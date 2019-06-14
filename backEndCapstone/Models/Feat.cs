@@ -12,6 +12,7 @@ namespace backEndCapstone.Models
         public int FeatId { get; set; }
 
         [Required]
+        [Display(Name = "Name")]
         public string Description { get; set; }
 
         public string featAbility { get; set; }

@@ -14,12 +14,15 @@ namespace backEndCapstone.Models
         public int SubClassClassId { get; set; }
 
         [Required]
+        [Display(Name = "Sub Class Name")]
         public string SubClassName { get; set; }
 
         [Required]
+        [Display(Name = "Description")]
         public string SubClassDescription { get; set; }
 
         [Required]
+        [Display(Name = "Features")]
         public string SubClassFeatures { get; set; }
 
     }

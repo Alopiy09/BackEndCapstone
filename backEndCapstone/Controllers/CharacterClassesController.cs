@@ -48,7 +48,7 @@ namespace backEndCapstone.Controllers
         // GET: CharacterClasses/Create
         public IActionResult Create()
         {
-            ViewData["SubClassId"] = new SelectList(_context.SubClass, "SubClassId", "SubClassDescription");
+            ViewData["SubClassId"] = new SelectList(_context.SubClass, "SubClassId", "SubClassName");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace backEndCapstone.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SubClassId"] = new SelectList(_context.SubClass, "SubClassId", "SubClassDescription", characterClass.SubClassId);
+            ViewData["SubClassId"] = new SelectList(_context.SubClass, "SubClassId", "SubClassName", characterClass.SubClassId);
             return View(characterClass);
         }
 

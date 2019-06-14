@@ -53,14 +53,57 @@ namespace backEndCapstone.Controllers
         // GET: Characters/Create
         public IActionResult Create()
         {
-            CreateCharacterViewModel CreateCharacterViewModel = _context.Race
-                .Select(li => new Race
+           var CCMV = new CreateCharacterViewModel();
+           var characterRace = _context.Race;
+           var characterFeats = _context.Feat;
+           var characterBackgrounds = _context.Background;
+           var characterClass = _context.CharacterClass;
+           List<SelectListItem> RaceSelectListItems = new List<SelectListItem>();
+           List<SelectListItem> FeatSelectListItems = new List<SelectListItem>();
+           List<SelectListItem> BackgroundSelectListItem = new List<SelectListItem>();
+           List<SelectListItem> ClassSelectListItem = new List<SelectListItem>();
+            
+            foreach(var race in characterRace)
+            {
+                SelectListItem li = new SelectListItem
                 {
-                    RaceId = li.RaceId,
-                    RaceType = li.RaceType
-                });
-           
-            return View();
+                    Value = race.RaceId.ToString(),
+                    Text = race.RaceType
+                };
+                RaceSelectListItems.Add(li);
+            }
+            foreach(var feat in characterFeats)
+            {
+                SelectListItem li = new SelectListItem
+                {
+                    Value = feat.FeatId.ToString(),
+                    Text = feat.Description
+                };
+                FeatSelectListItems.Add(li);
+            }
+            foreach (var background in characterBackgrounds)
+            {
+                SelectListItem li = new SelectListItem
+                {
+                    Value = background.BackgroundId.ToString(),
+                    Text = background.description
+                };
+                BackgroundSelectListItem.Add(li);
+            }
+            foreach (var CharacterClass in characterClass)
+            {
+                SelectListItem li = new SelectListItem
+                {
+                    Value = CharacterClass.CharacterClassId.ToString(),
+                    Text = CharacterClass.ClassName
+                };
+                ClassSelectListItem.Add(li);
+            }
+            CCMV.CharacterClass = ClassSelectListItem;
+            CCMV.Backgrounds = BackgroundSelectListItem;
+            CCMV.Feats = FeatSelectListItems;
+            CCMV.Races = RaceSelectListItems;
+            return View(CCMV);
 
         }
 
@@ -69,11 +112,11 @@ namespace backEndCapstone.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CharacterId,Name,Alignment,Strength,Dexterity,Constitution,Intelligence,Wisdom,Charisma,UserId,CharacterClassId,BackgroundId,EquipmentId,FeatId,RaceId")] CreateCharacterViewModel model)
+        public async Task<IActionResult> Create(CreateCharacterViewModel model)
         {
             if (ModelState.IsValid)
             { 
-                _context.Add(model);
+                _context.Add(model.Character);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

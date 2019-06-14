@@ -13,9 +13,6 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.SubClassClassId)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.SubClassName)
             </th>
             <th>
@@ -30,9 +27,6 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.SubClassClassId)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SubClassName)
             </td>

@@ -9,6 +9,7 @@ namespace backEndCapstone.Models
     public class Race
     {
         [Key]
+        [Display(Name = "Race")]
         public int RaceId { get; set; }
 
         [Required]

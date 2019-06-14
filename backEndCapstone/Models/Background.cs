@@ -11,10 +11,10 @@ namespace backEndCapstone.Models
         [Key]
         public int BackgroundId { get; set; }
 
-        [Required]
         public int CharacterId { get; set; }
 
         [Required]
+        [Display(Name = "Background Name")]
         public string description { get; set; }
 
         [Required]
