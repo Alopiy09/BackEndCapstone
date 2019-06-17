@@ -20,7 +20,6 @@ namespace backEndCapstone.Data
         public DbSet<Equipment> Equipment { get; set; }
         public DbSet<Feat> Feat { get; set; }
         public DbSet<Race> Race { get; set; }
-        public DbSet<Skills> Skill { get; set; }
         public DbSet<SubClass> SubClass { get; set; }
     }
 }

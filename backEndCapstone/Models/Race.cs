@@ -13,9 +13,6 @@ namespace backEndCapstone.Models
         public int RaceId { get; set; }
 
         [Required]
-        public int CharacterId { get; set; }
-
-        [Required]
         public string RaceType { get; set; }
 
         [Required]

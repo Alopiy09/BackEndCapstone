@@ -11,8 +11,6 @@ namespace backEndCapstone.Models
         [Key]
         public int SubClassId { get; set; }
 
-        public int SubClassClassId { get; set; }
-
         [Required]
         [Display(Name = "Sub Class Name")]
         public string SubClassName { get; set; }

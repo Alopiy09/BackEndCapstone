@@ -10,7 +10,6 @@ namespace backEndCapstone.Models
     {
         [Key]
         public int CharacterId { get; set; }
-        [Required]
         public string Name { get; set; }
         public string Alignment { get; set; } 
         [Required]
@@ -37,46 +36,46 @@ namespace backEndCapstone.Models
         [Range(1, 20)]
         public int Charisma { get; set; }
 
-        [Required]
-        public int UserId { get; set; }
+        
+        public string UserId { get; set; }
 
-        [Required]
+       
+        public ApplicationUser User { get; set; }
+
+     
         [Display(Name = "Class")]
         public int CharacterClassId { get; set; }
 
-        [Required]
-        public ICollection<CharacterClass> characterClasses { get; set; }
+        public CharacterClass characterClasses { get; set; }
 
-        [Required]
+      
         [Display(Name = "Background")]
         public int BackgroundId { get; set; }
 
-        [Required]
+        
         public Background background { get; set; }
 
-        [Required]
+       
         [Display(Name = "Equipment")]
         public int EquipmentId { get; set; }
 
-        [Required]
+      
         public ICollection<Equipment> equipment { get; set; }
 
-        [Required]
+        
         [Display(Name = "Feat")]
         public int FeatId { get; set; }
 
-        [Required]
+      
         public ICollection<Feat> feats { get; set; }
 
-        [Required]
+   
         [Display(Name = "Race")]
         public int RaceId { get; set; }
 
-        [Required]
+      
         public Race Race { get; set; }
 
-        [Required]
-        public ICollection<Skills> Skill { get; set; }
-
+        
     }
 }

@@ -9,6 +9,7 @@ using backEndCapstone.Data;
 using backEndCapstone.Models;
 using Microsoft.AspNetCore.Identity;
 using backEndCapstone.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace backEndCapstone.Controllers
 {
@@ -29,6 +30,10 @@ namespace backEndCapstone.Controllers
         // GET: Characters
         public async Task<IActionResult> Index()
         {
+            var applicationDbContext = _context.Character
+                .Include(c => c.Race);
+              
+                
             return View(await _context.Character.ToListAsync());
         }
 
@@ -41,19 +46,21 @@ namespace backEndCapstone.Controllers
             }
 
             var character = await _context.Character
+                .Include(c => c.Race)
                 .FirstOrDefaultAsync(m => m.CharacterId == id);
             if (character == null)
             {
                 return NotFound();
             }
-
             return View(character);
         }
 
+        [Authorize]
         // GET: Characters/Create
         public IActionResult Create()
         {
            var CCMV = new CreateCharacterViewModel();
+            CCMV.Character = new Character();
            var characterRace = _context.Race;
            var characterFeats = _context.Feat;
            var characterBackgrounds = _context.Background;
@@ -103,6 +110,7 @@ namespace backEndCapstone.Controllers
             CCMV.Backgrounds = BackgroundSelectListItem;
             CCMV.Feats = FeatSelectListItems;
             CCMV.Races = RaceSelectListItems;
+            ViewData["UserId"] = new SelectList(_context.ApplicationUser, "Id", "Id");
             return View(CCMV);
 
         }
@@ -114,13 +122,22 @@ namespace backEndCapstone.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateCharacterViewModel model)
         {
+            ModelState.Remove("UserId");
+            ModelState.Remove("User");
+            ModelState.Remove("Races");
+            ModelState.Remove("Feats");
+            ModelState.Remove("Backgrounds");
+            ModelState.Remove("CharacterClass");
+            var user =  await GetCurrentUserAsync();
             if (ModelState.IsValid)
-            { 
+            {
+                model.Character.User = user;
+                model.Character.UserId = user.Id;
                 _context.Add(model.Character);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            
+            ViewData["UserId"] = new SelectList(_context.ApplicationUser, "Id", "Id", model.Character.UserId);
             return View(model);
         }
 

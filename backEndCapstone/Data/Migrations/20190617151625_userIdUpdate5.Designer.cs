@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backEndCapstone.Data;
 
 namespace backEndCapstone.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190617151625_userIdUpdate5")]
+    partial class userIdUpdate5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -195,6 +197,8 @@ namespace backEndCapstone.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CharacterId");
+
                     b.Property<string>("backgroundAbilities")
                         .IsRequired();
 
@@ -216,6 +220,8 @@ namespace backEndCapstone.Data.Migrations
 
                     b.Property<int>("BackgroundId");
 
+                    b.Property<int?>("BackgroundId1");
+
                     b.Property<int>("CharacterClassId");
 
                     b.Property<int>("Charisma");
@@ -230,9 +236,12 @@ namespace backEndCapstone.Data.Migrations
 
                     b.Property<int>("Intelligence");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<int>("RaceId");
+
+                    b.Property<int?>("RaceId1");
 
                     b.Property<int>("Strength");
 
@@ -242,11 +251,11 @@ namespace backEndCapstone.Data.Migrations
 
                     b.HasKey("CharacterId");
 
-                    b.HasIndex("BackgroundId");
+                    b.HasIndex("BackgroundId1");
 
                     b.HasIndex("CharacterClassId");
 
-                    b.HasIndex("RaceId");
+                    b.HasIndex("RaceId1");
 
                     b.HasIndex("UserId");
 
@@ -328,6 +337,8 @@ namespace backEndCapstone.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CharacterId");
+
                     b.Property<string>("RaceType")
                         .IsRequired();
 
@@ -341,11 +352,31 @@ namespace backEndCapstone.Data.Migrations
                     b.ToTable("Race");
                 });
 
+            modelBuilder.Entity("backEndCapstone.Models.Skills", b =>
+                {
+                    b.Property<int>("SkillId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("SkillModifier");
+
+                    b.Property<string>("SkillName")
+                        .IsRequired();
+
+                    b.Property<bool>("isProficient");
+
+                    b.HasKey("SkillId");
+
+                    b.ToTable("Skill");
+                });
+
             modelBuilder.Entity("backEndCapstone.Models.SubClass", b =>
                 {
                     b.Property<int>("SubClassId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("SubClassClassId");
 
                     b.Property<string>("SubClassDescription")
                         .IsRequired();
@@ -425,8 +456,7 @@ namespace backEndCapstone.Data.Migrations
                 {
                     b.HasOne("backEndCapstone.Models.Background", "background")
                         .WithMany()
-                        .HasForeignKey("BackgroundId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("BackgroundId1");
 
                     b.HasOne("backEndCapstone.Models.CharacterClass", "characterClasses")
                         .WithMany()
@@ -435,8 +465,7 @@ namespace backEndCapstone.Data.Migrations
 
                     b.HasOne("backEndCapstone.Models.Race", "Race")
                         .WithMany()
-                        .HasForeignKey("RaceId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("RaceId1");
 
                     b.HasOne("backEndCapstone.Models.ApplicationUser", "User")
                         .WithMany("Characters")
