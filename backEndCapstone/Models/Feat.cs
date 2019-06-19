@@ -14,7 +14,7 @@ namespace backEndCapstone.Models
         [Required]
         [Display(Name = "Name")]
         public string Description { get; set; }
-
+        [Display(Name = "Ability")]
         public string featAbility { get; set; }
     }
 }

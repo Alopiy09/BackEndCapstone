@@ -6,6 +6,9 @@ a.navbar-brand {
   text-align: center;
   word-break: break-all;
 }
+#navbar {
+    background-color: darkgray;
+}
 
 /* Sticky footer styles
 -------------------------------------------------- */
@@ -44,6 +47,7 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
+  background-color: lightgray;
 }
 .footer {
   position: absolute;
@@ -64,3 +68,13 @@ body {
 #CharacterCards {
     border: solid black 1px;
 }
+
+.card {
+    width: 400px;
+}
+
+select {
+    width: 250px;
+}
+
+

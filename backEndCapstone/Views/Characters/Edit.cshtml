@@ -13,9 +13,12 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Character.CharacterId" />
+            <input type="hidden" asp-for="Character.CharacterClassId" />
+            <input type="hidden" asp-for="Character.BackgroundId" />
+            <input type="hidden" asp-for="Character.RaceId" />
             <div class="form-group">
                 <label asp-for="Character.Name" class="control-label"></label>
-                <input asp-for="Character.Name" class="form-control"  />
+                <input asp-for="Character.Name" class="form-control" />
                 <span asp-validation-for="Character.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -23,45 +26,49 @@
                 <input asp-for="Character.Alignment" class="form-control" />
                 <span asp-validation-for="Character.Alignment" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Character.Strength" class="control-label"></label>
-                <input asp-for="Character.Strength" class="form-control" />
-                <span asp-validation-for="Character.Strength" class="text-danger"></span>
+            <div id="AbilityScores">
+                <div class="form-group">
+                    <label asp-for="Character.Strength" class="control-label"></label>
+                    <input asp-for="Character.Strength" class="form-control" />
+                    <span asp-validation-for="Character.Strength" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Character.Dexterity" class="control-label"></label>
+                    <input asp-for="Character.Dexterity" class="form-control" />
+                    <span asp-validation-for="Character.Dexterity" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Character.Constitution" class="control-label"></label>
+                    <input asp-for="Character.Constitution" class="form-control" />
+                    <span asp-validation-for="Character.Constitution" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Character.Dexterity" class="control-label"></label>
-                <input asp-for="Character.Dexterity" class="form-control" />
-                <span asp-validation-for="Character.Dexterity" class="text-danger"></span>
+            <div id="AbilityScores">
+                <div class="form-group">
+                    <label asp-for="Character.Intelligence" class="control-label"></label>
+                    <input asp-for="Character.Intelligence" class="form-control" />
+                    <span asp-validation-for="Character.Intelligence" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Character.Wisdom" class="control-label"></label>
+                    <input asp-for="Character.Wisdom" class="form-control" />
+                    <span asp-validation-for="Character.Wisdom" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Character.Charisma" class="control-label"></label>
+                    <input asp-for="Character.Charisma" class="form-control" />
+                    <span asp-validation-for="Character.Charisma" class="text-danger"></span>
+                </div>
             </div>
+            <label asp-for="Character.equipment" class="control-label"></label>
             <div class="form-group">
-                <label asp-for="Character.Constitution" class="control-label"></label>
-                <input asp-for="Character.Constitution" class="form-control" />
-                <span asp-validation-for="Character.Constitution" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Character.Intelligence" class="control-label"></label>
-                <input asp-for="Character.Intelligence" class="form-control" />
-                <span asp-validation-for="Character.Intelligence" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Character.Wisdom" class="control-label"></label>
-                <input asp-for="Character.Wisdom" class="form-control" />
-                <span asp-validation-for="Character.Wisdom" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Character.Charisma" class="control-label"></label>
-                <input asp-for="Character.Charisma" class="form-control" />
-                <span asp-validation-for="Character.Charisma" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Character.EquipmentId" class="control-label"></label>
                 @Html.ListBoxFor(m => m.Equipment, Model.Equipment)
-                <span asp-validation-for="Character.EquipmentId" class="text-danger"></span>
+                <span asp-validation-for="Character.equipment" class="text-danger"></span>
             </div>
+            <label asp-for="Character.feats" class="control-label"></label>
             <div class="form-group">
-                <label asp-for="Character.FeatId" class="control-label"></label>
                 @Html.ListBoxFor(m => m.Feats, Model.Feats)
-                <span asp-validation-for="Character.FeatId" class="text-danger"></span>
+                <span asp-validation-for="Character.feats" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Update" class="btn btn-primary" />

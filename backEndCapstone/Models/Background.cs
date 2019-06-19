@@ -16,6 +16,7 @@ namespace backEndCapstone.Models
         public string description { get; set; }
 
         [Required]
+        [Display(Name = "Abilities")]
         public string backgroundAbilities { get; set; }
     }
 }
