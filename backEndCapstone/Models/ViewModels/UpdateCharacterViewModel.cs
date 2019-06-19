@@ -9,7 +9,10 @@ namespace backEndCapstone.Models.ViewModels
     public class UpdateCharacterViewModel
     {
         public Character Character { get; set; }
+
+        public int[] FeatIds { get; set; }
         public List<SelectListItem> Feats { get; set; }
+        public int[] EquipmentIds { get; set; }
         public List<SelectListItem> Equipment { get; set; }
     }
 }

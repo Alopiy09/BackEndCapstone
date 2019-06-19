@@ -54,7 +54,7 @@ namespace backEndCapstone.Controllers
                 .Include(c => c.Race)
                 .Include(c => c.characterClasses)
                 .Include(c => c.background)
-                .Include(c => c.feats)
+                .Include(c => c.Feats)
                 .FirstOrDefaultAsync(m => m.CharacterId == id);
             if (character == null)
             {
@@ -195,7 +195,7 @@ namespace backEndCapstone.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Character,CharacterClassId, CharacterId, Name, Alignment, Strength, Dexterity, Constitution, Inteligence, Wisdom, Charisma, Equipment, Feats")] UpdateCharacterViewModel model)
+        public async Task<IActionResult> Edit(int id, [Bind("Character,CharacterClassId, CharacterId, Name, Alignment, Strength, Dexterity, Constitution, Inteligence, Wisdom, Charisma, Equipment, Feats, EquipmentId, FeatsId")] UpdateCharacterViewModel model)
         {
             ModelState.Remove("UserId");
             ModelState.Remove("User");

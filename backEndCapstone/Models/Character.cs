@@ -60,14 +60,14 @@ namespace backEndCapstone.Models
         public int EquipmentId { get; set; }
 
       
-        public ICollection<Equipment> equipment { get; set; }
+        public ICollection<Equipment> Equipment { get; set; }
 
         
         [Display(Name = "Feat")]
         public int FeatId { get; set; }
 
       
-        public ICollection<Feat> feats { get; set; }
+        public ICollection<Feat> Feats { get; set; }
 
    
         [Display(Name = "Race")]
