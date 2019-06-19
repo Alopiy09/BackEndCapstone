@@ -10,84 +10,93 @@
     <h4>Character</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Alignment)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Alignment)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Strength)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Strength)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Dexterity)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Dexterity)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Constitution)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Constitution)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Intelligence)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Intelligence)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Wisdom)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Wisdom)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Charisma)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Charisma)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CharacterClassId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CharacterClassId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.BackgroundId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BackgroundId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EquipmentId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EquipmentId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FeatId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FeatId)
-        </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.RaceId)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Race.RaceType)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CharacterClassId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.characterClasses.ClassName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Alignment)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Alignment)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BackgroundId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.background.description)
+        </dd>
+        <div id="AbilityScores2">
+            <dt>
+                @Html.DisplayNameFor(model => model.Strength)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Strength)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Dexterity)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Dexterity)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Constitution)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Constitution)
+            </dd>
+        </div>
+        <div id="AbilityScores2">
+            <dt>
+                @Html.DisplayNameFor(model => model.Intelligence)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Intelligence)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Wisdom)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Wisdom)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Charisma)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Charisma)
+            </dd>
+        </div>
+        <div>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.EquipmentId)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.EquipmentId)
+            </dd>
+            @Html.ActionLink("Add Equipment",
+           "Create",
+           "Equipments")
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FeatId)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.feats)
+            </dd>
+        </div>
     </dl>
 </div>
 <div>

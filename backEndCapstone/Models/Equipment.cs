@@ -12,9 +12,11 @@ namespace backEndCapstone.Models
         public int EquipmentId { get; set; }
 
         [Required]
+        [Display(Name = "Name")]
         public string EquipmentName { get; set; }
 
         [Required]
+        [Display(Name = "Description")]
         public string EquipmentDescription { get; set; }
 
         [Required]

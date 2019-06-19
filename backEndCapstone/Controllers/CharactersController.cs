@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using backEndCapstone.Data;
+using backEndCapstone.Models;
+using backEndCapstone.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using backEndCapstone.Data;
-using backEndCapstone.Models;
-using Microsoft.AspNetCore.Identity;
-using backEndCapstone.Models.ViewModels;
-using Microsoft.AspNetCore.Authorization;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace backEndCapstone.Controllers
 {
@@ -27,13 +26,19 @@ namespace backEndCapstone.Controllers
         private Task<ApplicationUser> GetCurrentUserAsync() =>
             _userManager.GetUserAsync(HttpContext.User);
 
+        [Authorize]
         // GET: Characters
         public async Task<IActionResult> Index()
         {
+            var user = await GetCurrentUserAsync();
+
             var applicationDbContext = _context.Character
-                .Include(c => c.Race);
-              
-                
+                .Include(c => c.Race)
+                .Include(c => c.characterClasses)
+                .Where(c => c.UserId == user.Id)
+                .ToList();
+
+
             return View(await _context.Character.ToListAsync());
         }
 
@@ -47,6 +52,9 @@ namespace backEndCapstone.Controllers
 
             var character = await _context.Character
                 .Include(c => c.Race)
+                .Include(c => c.characterClasses)
+                .Include(c => c.background)
+                .Include(c => c.feats)
                 .FirstOrDefaultAsync(m => m.CharacterId == id);
             if (character == null)
             {
@@ -59,18 +67,18 @@ namespace backEndCapstone.Controllers
         // GET: Characters/Create
         public IActionResult Create()
         {
-           var CCMV = new CreateCharacterViewModel();
+            var CCMV = new CreateCharacterViewModel();
             CCMV.Character = new Character();
-           var characterRace = _context.Race;
-           var characterFeats = _context.Feat;
-           var characterBackgrounds = _context.Background;
-           var characterClass = _context.CharacterClass;
-           List<SelectListItem> RaceSelectListItems = new List<SelectListItem>();
-           List<SelectListItem> FeatSelectListItems = new List<SelectListItem>();
-           List<SelectListItem> BackgroundSelectListItem = new List<SelectListItem>();
-           List<SelectListItem> ClassSelectListItem = new List<SelectListItem>();
-            
-            foreach(var race in characterRace)
+            var characterRace = _context.Race;
+            var characterFeats = _context.Feat;
+            var characterBackgrounds = _context.Background;
+            var characterClass = _context.CharacterClass;
+            List<SelectListItem> RaceSelectListItems = new List<SelectListItem>();
+            List<SelectListItem> FeatSelectListItems = new List<SelectListItem>();
+            List<SelectListItem> BackgroundSelectListItem = new List<SelectListItem>();
+            List<SelectListItem> ClassSelectListItem = new List<SelectListItem>();
+
+            foreach (var race in characterRace)
             {
                 SelectListItem li = new SelectListItem
                 {
@@ -79,7 +87,7 @@ namespace backEndCapstone.Controllers
                 };
                 RaceSelectListItems.Add(li);
             }
-            foreach(var feat in characterFeats)
+            foreach (var feat in characterFeats)
             {
                 SelectListItem li = new SelectListItem
                 {
@@ -128,7 +136,7 @@ namespace backEndCapstone.Controllers
             ModelState.Remove("Feats");
             ModelState.Remove("Backgrounds");
             ModelState.Remove("CharacterClass");
-            var user =  await GetCurrentUserAsync();
+            var user = await GetCurrentUserAsync();
             if (ModelState.IsValid)
             {
                 model.Character.User = user;
@@ -144,17 +152,42 @@ namespace backEndCapstone.Controllers
         // GET: Characters/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+
+            var UCVM = new UpdateCharacterViewModel();
+
+            UCVM.Character = await _context.Character.FindAsync(id);
+
+            var characterFeats = _context.Feat;
+            var characterEquipment = _context.Equipment;
+
+            List<SelectListItem> EquipmentSelectListItems = new List<SelectListItem>();
+            List<SelectListItem> FeatSelectListItems = new List<SelectListItem>();
+
+            foreach (var equipment in characterEquipment)
             {
-                return NotFound();
+                SelectListItem li = new SelectListItem
+                {
+                    Value = equipment.EquipmentId.ToString(),
+                    Text = equipment.EquipmentName
+                };
+                EquipmentSelectListItems.Add(li);
             }
 
-            var character = await _context.Character.FindAsync(id);
-            if (character == null)
+            foreach (var feat in characterFeats)
             {
-                return NotFound();
+                SelectListItem li = new SelectListItem
+                {
+                    Value = feat.FeatId.ToString(),
+                    Text = feat.Description
+                };
+                FeatSelectListItems.Add(li);
             }
-            return View(character);
+
+            UCVM.Equipment = EquipmentSelectListItems;
+            UCVM.Feats = FeatSelectListItems;
+
+            ViewData["UserId"] = new SelectList(_context.ApplicationUser, "Id", "Id");
+            return View(UCVM);
         }
 
         // POST: Characters/Edit/5
@@ -162,9 +195,18 @@ namespace backEndCapstone.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CharacterId,Name,Alignment,Strength,Dexterity,Constitution,Intelligence,Wisdom,Charisma,UserId,CharacterClassId,BackgroundId,EquipmentId,FeatId,RaceId")] Character character)
+        public async Task<IActionResult> Edit(int id, [Bind("Character,CharacterClassId, CharacterId, Name, Alignment, Strength, Dexterity, Constitution, Inteligence, Wisdom, Charisma, Equipment, Feats")] UpdateCharacterViewModel model)
         {
-            if (id != character.CharacterId)
+            ModelState.Remove("UserId");
+            ModelState.Remove("User");
+            ModelState.Remove("Races");
+            ModelState.Remove("Feats");
+            ModelState.Remove("Backgrounds");
+            ModelState.Remove("CharacterClass"); 
+
+            
+
+            if (id != model.Character.CharacterId)
             {
                 return NotFound();
             }
@@ -173,12 +215,16 @@ namespace backEndCapstone.Controllers
             {
                 try
                 {
-                    _context.Update(character);
+                    var characterUserId = model.Character.UserId;
+                    var user = await GetCurrentUserAsync();
+
+                    model.Character.UserId = user.Id;
+                    _context.Update(model.Character);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CharacterExists(character.CharacterId))
+                    if (!CharacterExists(model.Character.CharacterId))
                     {
                         return NotFound();
                     }
@@ -189,7 +235,7 @@ namespace backEndCapstone.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(character);
+            return View(model);
         }
 
         // GET: Characters/Delete/5
