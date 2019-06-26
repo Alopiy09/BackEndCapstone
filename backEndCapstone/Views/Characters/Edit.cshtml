@@ -62,13 +62,13 @@
             </div>
             <label asp-for="Character.Equipment" class="control-label"></label>
             <div class="form-group">
-                @Html.ListBoxFor(m => m.Equipment, Model.Equipment)
-                <span asp-validation-for="Character.EquipmentId" class="text-danger"></span>
+                @Html.ListBoxFor(m => m.EquipmentIds, Model.Equipment)
+                <span asp-validation-for="Character.Equipment" class="text-danger"></span>
             </div>
             <label asp-for="Character.Feats" class="control-label"></label>
             <div class="form-group">
-                @Html.ListBoxFor(m => m.Feats, Model.Feats)
-                <span asp-validation-for="Character.FeatId" class="text-danger"></span>
+                @Html.ListBoxFor(m => m.FeatIds, Model.Feats)
+                <span asp-validation-for="Character.Feats" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Update" class="btn btn-primary" />

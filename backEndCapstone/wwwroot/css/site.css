@@ -65,6 +65,12 @@ body {
     flex-direction: row;
 }
 
+#AbilityScores2 {
+    display: flex;
+    flex-direction:column;
+    margin-left: 15px;
+}
+
 #CharacterCards {
     border: solid black 1px;
 }
@@ -75,6 +81,10 @@ body {
 
 select {
     width: 250px;
+}
+
+#CharacterThings {
+    display: flex;
 }
 
 

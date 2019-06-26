@@ -55,6 +55,10 @@ namespace backEndCapstone.Controllers
                 .Include(c => c.characterClasses)
                 .Include(c => c.background)
                 .Include(c => c.Feats)
+                .Include(c => c.FeatCharacters)
+                .ThenInclude(fc => fc.Feat)
+                .Include(c => c.EquipmentCharacters)
+                .ThenInclude(ec => ec.Equipment)
                 .FirstOrDefaultAsync(m => m.CharacterId == id);
             if (character == null)
             {
@@ -70,11 +74,9 @@ namespace backEndCapstone.Controllers
             var CCMV = new CreateCharacterViewModel();
             CCMV.Character = new Character();
             var characterRace = _context.Race;
-            var characterFeats = _context.Feat;
             var characterBackgrounds = _context.Background;
             var characterClass = _context.CharacterClass;
             List<SelectListItem> RaceSelectListItems = new List<SelectListItem>();
-            List<SelectListItem> FeatSelectListItems = new List<SelectListItem>();
             List<SelectListItem> BackgroundSelectListItem = new List<SelectListItem>();
             List<SelectListItem> ClassSelectListItem = new List<SelectListItem>();
 
@@ -86,15 +88,6 @@ namespace backEndCapstone.Controllers
                     Text = race.RaceType
                 };
                 RaceSelectListItems.Add(li);
-            }
-            foreach (var feat in characterFeats)
-            {
-                SelectListItem li = new SelectListItem
-                {
-                    Value = feat.FeatId.ToString(),
-                    Text = feat.Description
-                };
-                FeatSelectListItems.Add(li);
             }
             foreach (var background in characterBackgrounds)
             {
@@ -116,7 +109,6 @@ namespace backEndCapstone.Controllers
             }
             CCMV.CharacterClass = ClassSelectListItem;
             CCMV.Backgrounds = BackgroundSelectListItem;
-            CCMV.Feats = FeatSelectListItems;
             CCMV.Races = RaceSelectListItems;
             ViewData["UserId"] = new SelectList(_context.ApplicationUser, "Id", "Id");
             return View(CCMV);
@@ -195,17 +187,15 @@ namespace backEndCapstone.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Character,CharacterClassId, CharacterId, Name, Alignment, Strength, Dexterity, Constitution, Inteligence, Wisdom, Charisma, Equipment, Feats, EquipmentId, FeatsId")] UpdateCharacterViewModel model)
+        public async Task<IActionResult> Edit(int id,  UpdateCharacterViewModel model)
         {
             ModelState.Remove("UserId");
             ModelState.Remove("User");
             ModelState.Remove("Races");
             ModelState.Remove("Feats");
             ModelState.Remove("Backgrounds");
-            ModelState.Remove("CharacterClass"); 
-
+            ModelState.Remove("CharacterClass");
             
-
             if (id != model.Character.CharacterId)
             {
                 return NotFound();
@@ -217,11 +207,48 @@ namespace backEndCapstone.Controllers
                 {
                     var characterUserId = model.Character.UserId;
                     var user = await GetCurrentUserAsync();
-
                     model.Character.UserId = user.Id;
                     _context.Update(model.Character);
+
+                    var previousFeats = _context.FeatCharacter.Where(fc => fc.CharacterId == model.Character.CharacterId).ToList();
+
+                    foreach (var fc in previousFeats)
+                    {
+                        _context.Remove(fc);
+                    }
+
+                    foreach (int currentId in model.FeatIds)
+                    {
+                        var joinTableEntry = new FeatCharacter
+                        {
+                            FeatId = currentId,
+                            CharacterId = model.Character.CharacterId
+                        };
+
+                        _context.Add(joinTableEntry);
+                    }
+
+                    var previousEquipment = _context.EquipmentCharacter.Where(ec => ec.CharacterId == model.Character.CharacterId).ToList();
+
+                    foreach (var ec in previousEquipment)
+                    {
+                        _context.Remove(ec);
+                    }
+
+                    foreach (int currentId in model.EquipmentIds)
+                    {
+                        var joinTableEntry2 = new EquipmentCharacter
+                        {
+                            EquipmentId = currentId,
+                            CharacterId = model.Character.CharacterId
+                        };
+                        _context.Add(joinTableEntry2);
+                    }
+
                     await _context.SaveChangesAsync();
+
                 }
+
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!CharacterExists(model.Character.CharacterId))

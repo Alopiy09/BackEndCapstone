@@ -10,9 +10,11 @@ namespace backEndCapstone.Models.ViewModels
     {
         public Character Character { get; set; }
 
-        public int[] FeatIds { get; set; }
         public List<SelectListItem> Feats { get; set; }
-        public int[] EquipmentIds { get; set; }
         public List<SelectListItem> Equipment { get; set; }
+
+
+        public List<int> EquipmentIds { get; set; }
+        public List<int> FeatIds { get; set; }
     }
 }

@@ -21,5 +21,8 @@ namespace backEndCapstone.Data
         public DbSet<Feat> Feat { get; set; }
         public DbSet<Race> Race { get; set; }
         public DbSet<SubClass> SubClass { get; set; }
+        public DbSet<FeatCharacter> FeatCharacter { get; set; }
+        public DbSet<EquipmentCharacter> EquipmentCharacter { get; set; }
+
     }
 }

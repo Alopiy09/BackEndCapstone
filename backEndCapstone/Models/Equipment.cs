@@ -21,6 +21,7 @@ namespace backEndCapstone.Models
 
         [Required]
         public bool Atunded { get; set; }
+        public virtual ICollection<EquipmentCharacter> EquipmentCharacters { get; set; }
 
     }
 }

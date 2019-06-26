@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backEndCapstone.Data;
 
 namespace backEndCapstone.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190620180813_fcjointable")]
+    partial class fcjointable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -298,25 +300,6 @@ namespace backEndCapstone.Data.Migrations
                     b.ToTable("Equipment");
                 });
 
-            modelBuilder.Entity("backEndCapstone.Models.EquipmentCharacter", b =>
-                {
-                    b.Property<int>("EquipmentCharacterId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CharacterId");
-
-                    b.Property<int>("EquipmentId");
-
-                    b.HasKey("EquipmentCharacterId");
-
-                    b.HasIndex("CharacterId");
-
-                    b.HasIndex("EquipmentId");
-
-                    b.ToTable("EquipmentCharacter");
-                });
-
             modelBuilder.Entity("backEndCapstone.Models.Feat", b =>
                 {
                     b.Property<int>("FeatId")
@@ -350,8 +333,6 @@ namespace backEndCapstone.Data.Migrations
                     b.HasKey("FeatCharacterId");
 
                     b.HasIndex("CharacterId");
-
-                    b.HasIndex("FeatId");
 
                     b.ToTable("FeatCharacter");
                 });
@@ -492,19 +473,6 @@ namespace backEndCapstone.Data.Migrations
                         .HasForeignKey("CharacterId");
                 });
 
-            modelBuilder.Entity("backEndCapstone.Models.EquipmentCharacter", b =>
-                {
-                    b.HasOne("backEndCapstone.Models.Character", "Character")
-                        .WithMany("EquipmentCharacters")
-                        .HasForeignKey("CharacterId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("backEndCapstone.Models.Equipment", "Equipment")
-                        .WithMany("EquipmentCharacters")
-                        .HasForeignKey("EquipmentId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("backEndCapstone.Models.Feat", b =>
                 {
                     b.HasOne("backEndCapstone.Models.Character")
@@ -514,14 +482,9 @@ namespace backEndCapstone.Data.Migrations
 
             modelBuilder.Entity("backEndCapstone.Models.FeatCharacter", b =>
                 {
-                    b.HasOne("backEndCapstone.Models.Character", "Character")
+                    b.HasOne("backEndCapstone.Models.Character")
                         .WithMany("FeatCharacters")
                         .HasForeignKey("CharacterId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("backEndCapstone.Models.Feat", "Feat")
-                        .WithMany("FeatCharacters")
-                        .HasForeignKey("FeatId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

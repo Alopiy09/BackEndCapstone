@@ -40,6 +40,28 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.background.description)
         </dd>
+        <div id=" CharacterThings" >
+            <dt class="col-sm-2">
+                Equipment
+            </dt>
+            @foreach (var Equipch in Model.EquipmentCharacters)
+            {
+            <dd class="col-sm-10">
+               @Equipch.Equipment.EquipmentName:
+               @Equipch.Equipment.EquipmentDescription
+            </dd>
+            }
+            <dt class="col-sm-2">
+                Feats
+            </dt>
+            @foreach (var featch in Model.FeatCharacters)
+            {
+                <dd class="col-sm-10">
+                    @featch.Feat.Description:
+                    @featch.Feat.featAbility
+                </dd>
+            }
+        </div>
         <div id="AbilityScores2">
             <dt>
                 @Html.DisplayNameFor(model => model.Strength)
@@ -78,23 +100,6 @@
             </dt>
             <dd>
                 @Html.DisplayFor(model => model.Charisma)
-            </dd>
-        </div>
-        <div>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.EquipmentId)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.EquipmentId)
-            </dd>
-            @Html.ActionLink("Add Equipment",
-           "Create",
-           "Equipments")
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.FeatId)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.FeatId)
             </dd>
         </div>
     </dl>

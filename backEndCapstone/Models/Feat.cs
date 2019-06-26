@@ -16,5 +16,7 @@ namespace backEndCapstone.Models
         public string Description { get; set; }
         [Display(Name = "Ability")]
         public string featAbility { get; set; }
+
+        public virtual ICollection<FeatCharacter> FeatCharacters { get; set; }
     }
 }

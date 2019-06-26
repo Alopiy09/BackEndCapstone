@@ -56,20 +56,15 @@ namespace backEndCapstone.Models
         public Background background { get; set; }
 
        
-        [Display(Name = "Equipment")]
-        public int EquipmentId { get; set; }
-
-      
-        public ICollection<Equipment> Equipment { get; set; }
+        public virtual ICollection<Equipment> Equipment { get; set; }
 
         
-        [Display(Name = "Feat")]
-        public int FeatId { get; set; }
+        public virtual ICollection<Feat> Feats { get; set; }
 
-      
-        public ICollection<Feat> Feats { get; set; }
+        public virtual ICollection<FeatCharacter> FeatCharacters { get; set; }
 
-   
+        public virtual ICollection<EquipmentCharacter> Equipment Characters { get; set; }
+
         [Display(Name = "Race")]
         public int RaceId { get; set; }
 
