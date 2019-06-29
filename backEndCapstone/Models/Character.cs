@@ -63,13 +63,15 @@ namespace backEndCapstone.Models
 
         public virtual ICollection<FeatCharacter> FeatCharacters { get; set; }
 
-        public virtual ICollection<EquipmentCharacter> Equipment Characters { get; set; }
+        public virtual ICollection<EquipmentCharacter> EquipmentCharacters { get; set; }
 
         [Display(Name = "Race")]
         public int RaceId { get; set; }
 
       
         public Race Race { get; set; }
+
+        public string characterDetails { get; set; }
 
         
     }
