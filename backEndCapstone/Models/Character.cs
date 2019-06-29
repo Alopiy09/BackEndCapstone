@@ -71,6 +71,7 @@ namespace backEndCapstone.Models
       
         public Race Race { get; set; }
 
+        [Display(Name = "Character Details")]
         public string characterDetails { get; set; }
 
         
